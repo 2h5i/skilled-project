@@ -43,14 +43,14 @@ public class JwtUtil {
     // header 토큰 가져오기
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
             return bearerToken.substring(7);
         }
         return null;
     }
 
     // 토큰 생성
-    public String createToken(String username ){
+    public String createToken(String username) {
         Date date = new Date();
 
         return BEARER_PREFIX +
@@ -61,21 +61,20 @@ public class JwtUtil {
                         .setIssuedAt(date)
                         .signWith(key, signatureAlgorithm)
                         .compact();
-
     }
 
     // 토큰 검증
     public boolean validateToken(String token) {
-        try{
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJwt(token);
+        try {
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
-        }catch (SecurityException | MalformedJwtException e) {
+        } catch (SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT signature, 유효하지 않는 JWT 서명입니다.");
-        }catch (ExpiredJwtException e) {
+        } catch (ExpiredJwtException e) {
             log.info("Expired JWT token, 만료된 JWT token입니다.");
-        }catch (UnsupportedJwtException e) {
+        } catch (UnsupportedJwtException e) {
             log.info("Unsupported JWT token, 지원되지 않는 JWT 토큰 입니다.");
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             log.info("JWT claims is empty, 잘못된 JWT 토큰입니다.");
         }
         return false;

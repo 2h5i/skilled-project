@@ -38,4 +38,8 @@ public class User {
         this.username = username;
         this.password = password;
     }
+
+    public boolean hasPost(Post post) {
+        return this.posts.stream().anyMatch(x -> x.equals(post));
+    }
 }

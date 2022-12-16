@@ -13,11 +13,4 @@ public enum AuthStatus {
     private int statusCode;
     private String msg;
 
-    public int getStatusCode() {
-        return statusCode;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
 }

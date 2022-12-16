@@ -7,6 +7,8 @@ import com.sparta.skilledproject.user.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +22,12 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseAuthDto signup(@RequestBody SignupRequestDto signupRequestDto){
-        return userService.signup(signupRequestDto);
+    public ResponseEntity<ResponseAuthDto> signup(@RequestBody SignupRequestDto signupRequestDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.signup(signupRequestDto));
     }
 
     @PostMapping("/login")
-    public ResponseAuthDto login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
-        return userService.login(loginRequestDto, response);
+    public ResponseEntity<ResponseAuthDto> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.login(loginRequestDto,response));
     }
 }

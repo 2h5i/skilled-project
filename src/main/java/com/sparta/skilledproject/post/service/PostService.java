@@ -2,11 +2,11 @@ package com.sparta.skilledproject.post.service;
 
 import com.sparta.skilledproject.post.dto.CreatePostDto;
 import com.sparta.skilledproject.post.dto.DeletePostDto;
+import com.sparta.skilledproject.post.dto.ResponseDeleteDto;
 import com.sparta.skilledproject.post.dto.ResponsePostDto;
 import com.sparta.skilledproject.post.dto.UpdatePostDto;
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.HashMap;
 import java.util.List;
 
 public interface PostService {
@@ -17,7 +17,7 @@ public interface PostService {
 
     ResponsePostDto getPostById(Long id);
 
-    ResponsePostDto updatePostById(Long id, UpdatePostDto updatePostDto);
+    ResponsePostDto updatePostById(Long id, UpdatePostDto updatePostDto, HttpServletRequest request);
 
-    HashMap<String,String> deletePostById(Long id, DeletePostDto deletePostDto);
+    ResponseDeleteDto deletePostById(Long id, DeletePostDto deletePostDto, HttpServletRequest request);
 }

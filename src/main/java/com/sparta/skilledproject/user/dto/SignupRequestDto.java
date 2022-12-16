@@ -17,4 +17,5 @@ public class SignupRequestDto {
     @Size(min = 8, max = 15)
     @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "a-z,A-Z 0~9 값만 입력해주세요.")
     private String password;
+
 }

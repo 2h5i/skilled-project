@@ -56,6 +56,6 @@ public class UserServiceImpl implements UserService{
 
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername()));
         return new ResponseAuthDto(AuthStatus.LOGIN_SUCCESS);
-
     }
+
 }

@@ -2,6 +2,7 @@ package com.sparta.skilledproject.post.controller;
 
 import com.sparta.skilledproject.post.dto.CreatePostDto;
 import com.sparta.skilledproject.post.dto.DeletePostDto;
+import com.sparta.skilledproject.post.dto.ResponseDeleteDto;
 import com.sparta.skilledproject.post.dto.ResponsePostDto;
 import com.sparta.skilledproject.post.dto.UpdatePostDto;
 import com.sparta.skilledproject.post.service.PostService;
@@ -42,13 +43,13 @@ public class PostController {
     }
 
     @PutMapping("/posts/{id}")
-    public ResponsePostDto updatePostById(@PathVariable Long id, @RequestBody UpdatePostDto updatePostDto) {
-        return postService.updatePostById(id, updatePostDto);
+    public ResponsePostDto updatePostById(@PathVariable Long id, @RequestBody UpdatePostDto updatePostDto, HttpServletRequest request) {
+        return postService.updatePostById(id, updatePostDto, request);
     }
 
     @DeleteMapping("/posts/{id}")
-    public HashMap<String, String> deletePostById(@PathVariable Long id, @RequestBody DeletePostDto deletePostDto) {
-        return postService.deletePostById(id, deletePostDto);
+    public ResponseDeleteDto deletePostById(@PathVariable Long id, @RequestBody DeletePostDto deletePostDto, HttpServletRequest request) {
+        return postService.deletePostById(id, deletePostDto, request);
     }
 
 }
