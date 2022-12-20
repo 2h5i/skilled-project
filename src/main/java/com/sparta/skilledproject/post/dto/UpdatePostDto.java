@@ -9,5 +9,4 @@ public class UpdatePostDto {
 
     private String title;
     private String contents;
-
 }

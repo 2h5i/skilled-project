@@ -1,7 +1,6 @@
 package com.sparta.skilledproject.post.service;
 
 import com.sparta.skilledproject.post.dto.CreatePostDto;
-import com.sparta.skilledproject.post.dto.DeletePostDto;
 import com.sparta.skilledproject.post.dto.ResponseDeleteDto;
 import com.sparta.skilledproject.post.dto.ResponsePostDto;
 import com.sparta.skilledproject.post.dto.UpdatePostDto;
@@ -19,5 +18,5 @@ public interface PostService {
 
     ResponsePostDto updatePostById(Long id, UpdatePostDto updatePostDto, HttpServletRequest request);
 
-    ResponseDeleteDto deletePostById(Long id, DeletePostDto deletePostDto, HttpServletRequest request);
+    ResponseDeleteDto deletePostById(Long id, HttpServletRequest request);
 }

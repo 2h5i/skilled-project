@@ -48,8 +48,8 @@ public class PostController {
     }
 
     @DeleteMapping("/posts/{id}")
-    public ResponseDeleteDto deletePostById(@PathVariable Long id, @RequestBody DeletePostDto deletePostDto, HttpServletRequest request) {
-        return postService.deletePostById(id, deletePostDto, request);
+    public ResponseDeleteDto deletePostById(@PathVariable Long id, HttpServletRequest request) {
+        return postService.deletePostById(id, request);
     }
 
 }

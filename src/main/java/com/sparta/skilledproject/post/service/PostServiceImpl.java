@@ -5,7 +5,6 @@ import com.sparta.skilledproject.common.exception.NoExistUserException;
 import com.sparta.skilledproject.common.exception.UnauthorizedException;
 import com.sparta.skilledproject.jwt.JwtUtil;
 import com.sparta.skilledproject.post.dto.CreatePostDto;
-import com.sparta.skilledproject.post.dto.DeletePostDto;
 import com.sparta.skilledproject.post.dto.PostStatus;
 import com.sparta.skilledproject.post.dto.ResponseDeleteDto;
 import com.sparta.skilledproject.post.dto.ResponsePostDto;
@@ -79,7 +78,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public ResponseDeleteDto deletePostById(Long id, DeletePostDto deletePostDto, HttpServletRequest request) {
+    public ResponseDeleteDto deletePostById(Long id, HttpServletRequest request) {
         String loginUsername = validateTokenAndGetLoginId(request);
         User user = userRepository.findByUsername(loginUsername).orElseThrow(NoExistUserException::new);
 
