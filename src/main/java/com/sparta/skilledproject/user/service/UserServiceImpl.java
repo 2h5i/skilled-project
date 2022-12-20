@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService{
         return new ResponseAuthDto(AuthStatus.SIGNUP_SUCCESS);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public ResponseAuthDto login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
         String username = loginRequestDto.getUsername();

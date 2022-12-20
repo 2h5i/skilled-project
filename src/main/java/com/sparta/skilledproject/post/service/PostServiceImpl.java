@@ -18,6 +18,7 @@ import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,11 +31,13 @@ public class PostServiceImpl implements PostService {
     private final JwtUtil jwtUtil;
 
     @Override
+    @Transactional(readOnly = true)
     public List<ResponsePostDto> getPostList() {
         return ResponsePostDto.of(postRepository.findAllByOrderByCreatedAtDesc());
     }
 
     @Override
+    @Transactional
     public ResponsePostDto createPost(CreatePostDto createPostDto, HttpServletRequest request) {
         String loginUsername = validateTokenAndGetLoginId(request);
 
@@ -48,6 +51,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ResponsePostDto getPostById(Long id) {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당하는 게시글이 없습니다.")
@@ -57,6 +61,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional
     public ResponsePostDto updatePostById(Long id, UpdatePostDto updatePostDto, HttpServletRequest request) {
         String loginUsername = validateTokenAndGetLoginId(request);
 
@@ -73,6 +78,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional
     public ResponseDeleteDto deletePostById(Long id, DeletePostDto deletePostDto, HttpServletRequest request) {
         String loginUsername = validateTokenAndGetLoginId(request);
         User user = userRepository.findByUsername(loginUsername).orElseThrow(NoExistUserException::new);

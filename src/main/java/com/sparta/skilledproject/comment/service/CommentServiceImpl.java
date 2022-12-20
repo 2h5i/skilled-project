@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +30,7 @@ public class CommentServiceImpl implements CommentService {
     private final JwtUtil jwtUtil;
 
     @Override
+    @Transactional
     public ResponseCommentDto createComment(Long postId, CreateCommentDto createCommentDto, HttpServletRequest request) {
         String loginUsername = validateTokenAndGetLoginId(request);
 
@@ -47,6 +49,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional
     public ResponseCommentDto updateCommentById(Long commentId, UpdateCommentDto updateCommentDto, HttpServletRequest request) {
         String loginUsername = validateTokenAndGetLoginId(request);
 
@@ -65,6 +68,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional
     public ResponseDeleteDto deleteCommentById(Long commentId, HttpServletRequest request) {
         String loginUsername = validateTokenAndGetLoginId(request);
 
