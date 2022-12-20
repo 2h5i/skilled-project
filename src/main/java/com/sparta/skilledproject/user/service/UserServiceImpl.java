@@ -6,6 +6,7 @@ import com.sparta.skilledproject.user.dto.ResponseAuthDto;
 import com.sparta.skilledproject.user.dto.SignupRequestDto;
 import com.sparta.skilledproject.user.dto.AuthStatus;
 import com.sparta.skilledproject.user.entity.User;
+import com.sparta.skilledproject.user.entity.UserRole;
 import com.sparta.skilledproject.user.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
+    private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
     @Transactional
     @Override
@@ -33,7 +35,15 @@ public class UserServiceImpl implements UserService{
             throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
         }
 
-        User user = new User(username, password);
+        UserRole userRole = UserRole.USER;
+        if(signupRequestDto.isAdmin()){
+            if(!signupRequestDto.getAdminToken().equals(ADMIN_TOKEN)){
+                throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가능합니다.");
+            }
+            userRole = UserRole.ADMIN;
+        }
+
+        User user = new User(username, password, userRole);
         userRepository.save(user);
         return new ResponseAuthDto(AuthStatus.SIGNUP_SUCCESS);
     }

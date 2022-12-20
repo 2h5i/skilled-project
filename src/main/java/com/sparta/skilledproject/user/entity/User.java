@@ -1,5 +1,6 @@
 package com.sparta.skilledproject.user.entity;
 
+import com.sparta.skilledproject.comment.entity.Comment;
 import com.sparta.skilledproject.post.entity.Post;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,12 +35,27 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
 
-    public User(String username, String password) {
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Comment> comments = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
+
+    public User(String username, String password, UserRole userRole) {
         this.username = username;
         this.password = password;
+        this.userRole = userRole;
     }
 
     public boolean hasPost(Post post) {
         return this.posts.stream().anyMatch(x -> x.equals(post));
+    }
+
+    public boolean isAdmin() {
+        return this.userRole == UserRole.ADMIN;
+    }
+
+    public boolean hasComment(Comment comment) {
+        return this.comments.stream().anyMatch(x -> x.equals(comment));
     }
 }

@@ -1,4 +1,4 @@
-package com.sparta.skilledproject.post.entity;
+package com.sparta.skilledproject.common.entity;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

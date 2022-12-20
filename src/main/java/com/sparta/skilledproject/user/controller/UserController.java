@@ -5,6 +5,7 @@ import com.sparta.skilledproject.user.dto.ResponseAuthDto;
 import com.sparta.skilledproject.user.dto.SignupRequestDto;
 import com.sparta.skilledproject.user.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<ResponseAuthDto> signup(@RequestBody SignupRequestDto signupRequestDto) {
+    public ResponseEntity<ResponseAuthDto> signup(@RequestBody @Valid SignupRequestDto signupRequestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.signup(signupRequestDto));
     }
 

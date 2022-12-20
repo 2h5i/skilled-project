@@ -36,9 +36,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public ResponsePostDto createPost(CreatePostDto createPostDto, HttpServletRequest request) {
-        String loginId = validateTokenAndGetLoginId(request);
+        String loginUsername = validateTokenAndGetLoginId(request);
 
-        User user = userRepository.findByUsername(loginId).orElseThrow(
+        User user = userRepository.findByUsername(loginUsername).orElseThrow(
                 () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
         );
         Post post = new Post(createPostDto, user);
@@ -58,9 +58,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public ResponsePostDto updatePostById(Long id, UpdatePostDto updatePostDto, HttpServletRequest request) {
-        String loginId = validateTokenAndGetLoginId(request);
+        String loginUsername = validateTokenAndGetLoginId(request);
 
-        User user = userRepository.findByUsername(loginId).orElseThrow(NoExistUserException::new);
+        User user = userRepository.findByUsername(loginUsername).orElseThrow(NoExistUserException::new);
 
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당하는 게시글이 없습니다.")
@@ -74,8 +74,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public ResponseDeleteDto deletePostById(Long id, DeletePostDto deletePostDto, HttpServletRequest request) {
-        String loginId = validateTokenAndGetLoginId(request);
-        User user = userRepository.findByUsername(loginId).orElseThrow(NoExistUserException::new);
+        String loginUsername = validateTokenAndGetLoginId(request);
+        User user = userRepository.findByUsername(loginUsername).orElseThrow(NoExistUserException::new);
 
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당하는 게시글이 없습니다.")
@@ -98,13 +98,13 @@ public class PostServiceImpl implements PostService {
                 throw new InvalidTokenException();
             }
         } else {
-            throw new IllegalArgumentException();
+            throw new InvalidTokenException();
         }
         return claims.getSubject();
     }
 
     private void validateAuthorization(User user, Post post) {
-        if (!user.hasPost(post)) {
+        if (!user.hasPost(post) && !user.isAdmin()) {
             throw new UnauthorizedException();
         }
     }

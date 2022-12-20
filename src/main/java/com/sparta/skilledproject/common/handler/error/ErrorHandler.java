@@ -3,6 +3,7 @@ package com.sparta.skilledproject.common.handler.error;
 import com.sparta.skilledproject.common.exception.InvalidTokenException;
 import com.sparta.skilledproject.common.exception.NoExistUserException;
 import com.sparta.skilledproject.common.exception.UnauthorizedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -35,4 +36,11 @@ public class ErrorHandler {
     public ErrorResponse handleIllegalArgumentException(IllegalArgumentException exception) {
         return ErrorResponse.of(ErrorCode.ILLEGAL_ARGUMENT, exception.getMessage());
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ErrorResponse handleMethodArgumentNotValidExcpetion(MethodArgumentNotValidException exception) {
+        return ErrorResponse.of(ErrorCode.ARGUMENT_NOT_VALID, exception.getMessage());
+    }
+
 }

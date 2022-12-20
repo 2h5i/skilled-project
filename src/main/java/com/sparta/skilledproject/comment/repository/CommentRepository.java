@@ -1,0 +1,7 @@
+package com.sparta.skilledproject.comment.repository;
+
+import com.sparta.skilledproject.comment.entity.Comment;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CommentRepository extends JpaRepository<Comment, Long> {
+}
