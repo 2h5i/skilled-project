@@ -41,7 +41,7 @@ public class Post extends BaseEntity {
     private User user;
 
     @OneToMany(mappedBy = "post",
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
